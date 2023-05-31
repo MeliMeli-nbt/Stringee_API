@@ -51,16 +51,16 @@ router.get('/answer_url_project', (req, res) => {
     from: {
       type: 'internal',
       number: decodeFrom,
-      alias: decodeFrom
+      alias: ''
     },
     to: {
       type: toType,
       number: decodeTo,
-      alias: decodeTo
+      alias: ''
     },
     customData: `custom-data-from-server-${decodeCustom}`,
     timeout: 45,
-    maxConnectTime: -1,
+    maxConnectTime: 0,
     peerToPeerCall: false
   };
 
