@@ -75,25 +75,25 @@ router.get('/answer_url_project', (req, res) => {
 });
 
 router.get('/answer_url_number', (req, res) => {
-  const userId = req.query.userId || '';
   const from = req.query.from || '';
   const to = req.query.to || '';
-  const fromInternal = req.query.fromInternal || '';
-  const uuid = req.query.uuid || '';
+
+  const decodeFrom = decodeURIComponent(from);
+  const decodeTo = decodeURIComponent(to);
 
   const scco = [{
     "action": "connect",
     
     "from": {
       "type": "internal",
-      "number": from,
-      "alias": from
+      "number": decodeFrom,
+      "alias": decodeFrom
     },
     
     "to": {
       "type": "external",
-      "number": to,
-      "alias": to
+      "number": decodeTo,
+      "alias": decodeTo
     },
     "customData": "",
     "timeout": 60,
