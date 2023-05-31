@@ -1,48 +1,33 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
-router.post('/generate_answer_url_project', (req, res) => {
-  const from = req.body.from;
-  const to = req.body.to || '';
-  const fromInternal = req.body.fromInternal || '';
-  const userId = req.body.userId || '';
-  const projectId = req.body.projectId || '';
-  const custom = req.body.custom || '';
-
-  const answerUrl = 'answer_url_project?from=' + from + '&to=' + to + '&fromInternal=' + fromInternal + '&userId=' + userId + '&projectId=' + projectId + '&custom=' + custom;
-
-  res.json(answerUrl);
-})
-
-router.post('/generate_answer_url_number', (req, res) => {
-  const from = req.body.from || '';
-  const to = req.body.to || '';
-  const record = req.body.record || '';
-  const appToPhone = req.body.appToPhone || '';
-
-  const answerUrl = 'answer_url_number?from=' + from + '&to=' + to  + '&record=' + record + '&appToPhone=' + appToPhone;
-
-  res.json(answerUrl);
-})
 
 router.get('/answer_url_project', (req, res) => {
   const from = req.query.from || '';
   const to = req.query.to || '';
+  const appToPhone = req.query.appToPhone || '';
 
   const decodeFrom = decodeURIComponent(from);
   const decodeTo = decodeURIComponent(to);
 
+  let location = '';
+  if(appToPhone === 'true'){
+    location = 'external'
+  }
+  else {
+    location = 'internal'
+  }
   const connectAction = {
     action: 'connect',
     from: {
       type: 'internal',
       number: decodeFrom,
-      alias: ''
+      alias: decodeFrom
     },
     to: {
-      type: 'internal',
+      type: location,
       number: decodeTo,
-      alias: ''
+      alias: decodeTo
     },
     customData: '',
     timeout: 60,
@@ -55,30 +40,44 @@ router.get('/answer_url_project', (req, res) => {
 });
 
 router.get('/answer_url_number', (req, res) => {
-  const from = req.query.from || '';
-  const to = req.query.to || '';
+  const to_number = req.query.to_number || '';
+  const stringeeNumber = req.query.stringeeNumber || '';
+  const phoneToPhone = req.query.to || '';
 
-  const decodeFrom = decodeURIComponent(from);
-  const decodeTo = decodeURIComponent(to);
 
+  let location = '';
+  let numberFrom = '';
+  let aliasFrom = '';
+  let numberTo = '';
+  let aliasTo = '';
+  if(phoneToPhone === 'true'){
+    location = 'external'
+    numberFrom = null;
+    aliasFrom = stringeeNumber;
+    numberTo = to_number;
+    aliasTo = to_number;
+  } else {
+    location = 'internal'
+    numberFrom = null;
+    aliasFrom = null;
+    numberTo = to_number;
+    aliasTo = '842473001543'
+  }
   const scco = [{
     "action": "connect",
-    
     "from": {
-      "type": "internal",
-      "number": decodeFrom,
-      "alias": ''
+        "type": "external",
+        "number": numberFrom,
+        "alias": aliasFrom
     },
-    
     "to": {
-      "type": "external",
-      "number": decodeTo,
-      "alias": ''
+        "type": location,
+        "number": numberTo,
+        "alias": aliasTo
     },
-    "customData": "",
-    "timeout": 60,
-    "maxConnectTime": 0,
-    "peerToPeerCall": false
+    "continueOnFail": false,
+    "onFailEventUrl": "",
+    "customData": null
   }];
 
   res.json(scco);
