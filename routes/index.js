@@ -28,23 +28,9 @@ router.post('/generate_answer_url_number', (req, res) => {
 router.get('/answer_url_project', (req, res) => {
   const from = req.query.from || '';
   const to = req.query.to || '';
-  const fromInternal = req.query.fromInternal || '';
-  const userId = req.query.userId || '';
-  const projectId = req.query.projectId || '';
-  const custom = req.query.custom || '';
 
   const decodeFrom = decodeURIComponent(from);
   const decodeTo = decodeURIComponent(to);
-  const decodeCustom = decodeURIComponent(custom);
-
-  const toInt = parseInt(to);
-
-  let toType = '';
-  if (toInt < 60000) {
-    toType = 'internal';
-  } else {
-    toType = 'external';
-  }
 
   const connectAction = {
     action: 'connect',
@@ -54,20 +40,14 @@ router.get('/answer_url_project', (req, res) => {
       alias: ''
     },
     to: {
-      type: toType,
+      type: 'internal',
       number: decodeTo,
       alias: ''
     },
-    customData: `custom-data-from-server-${decodeCustom}`,
-    timeout: 45,
+    customData: '',
+    timeout: 60,
     maxConnectTime: 0,
     peerToPeerCall: false
-  };
-
-  const recordAction = {
-    action: 'record',
-    eventUrl: '',
-    format: 'mp3'
   };
 
   const sccos = [connectAction];
