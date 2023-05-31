@@ -87,13 +87,13 @@ router.get('/answer_url_number', (req, res) => {
     "from": {
       "type": "internal",
       "number": decodeFrom,
-      "alias": decodeFrom
+      "alias": ''
     },
     
     "to": {
       "type": "external",
       "number": decodeTo,
-      "alias": decodeTo
+      "alias": ''
     },
     "customData": "",
     "timeout": 60,
