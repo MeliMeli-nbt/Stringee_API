@@ -48,6 +48,8 @@ router.get('/answer_url_project', (req, res) => {
 });
 
 router.get('/answer_url_number', (req, res) => {
+  const from = req.query.from || '';
+  const to = req.query.to || '';
   const to_number = req.query.to_number || '';
   const stringeeNumber = req.query.stringeeNumber || '';
   const phoneToPhone = req.query.to || '';
@@ -60,16 +62,16 @@ router.get('/answer_url_number', (req, res) => {
   let aliasTo = '';
   if(phoneToPhone === 'true'){
     location = 'external'
-    numberFrom = null;
+    numberFrom = from;
     aliasFrom = stringeeNumber;
     numberTo = to_number;
-    aliasTo = to_number;
+    aliasTo = 'Call_to_' + to;
   } else {
     location = 'internal'
-    numberFrom = null;
-    aliasFrom = null;
+    numberFrom = from;
+    aliasFrom = from;
     numberTo = to_number;
-    aliasTo = '842473001543'
+    aliasTo = 'Call_to_' + to
   }
   const scco = [{
     "action": "connect",
