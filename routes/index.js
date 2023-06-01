@@ -6,28 +6,36 @@ router.get('/answer_url_project', (req, res) => {
   const from = req.query.from || '';
   const to = req.query.to || '';
   const appToPhone = req.query.appToPhone || '';
+  const userId = req.query.userId || '';
 
   const decodeFrom = decodeURIComponent(from);
   const decodeTo = decodeURIComponent(to);
 
   let location = '';
-  if(appToPhone === 'true'){
-    location = 'external'
+  let typeForm = '';
+  let typeTo = '';
+
+  if(appToPhone == 'true'){
+    location = 'external';
+    typeForm = decodeFrom;
+    typeTo = decodeTo;
   }
   else {
-    location = 'internal'
+    location = 'internal';
+    typeForm = userId;
+    typeTo = decodeTo;
   }
   const connectAction = {
     action: 'connect',
     from: {
       type: 'internal',
-      number: decodeFrom,
-      alias: decodeFrom
+      number: typeForm,
+      alias: typeForm
     },
     to: {
       type: location,
-      number: decodeTo,
-      alias: decodeTo
+      number: typeTo,
+      alias: typeTo
     },
     customData: '',
     timeout: 60,
