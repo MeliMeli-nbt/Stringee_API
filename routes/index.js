@@ -52,16 +52,15 @@ router.get('/answer_url_number', (req, res) => {
   const to = req.query.to || '';
   const to_number = req.query.to_number || '';
   const stringeeNumber = req.query.stringeeNumber || '';
-  const phoneToPhone = req.query.to || '';
-
+  const phoneToPhone = req.query.phoneToPhone || '';
 
   let location = '';
   let numberFrom = '';
   let aliasFrom = '';
   let numberTo = '';
   let aliasTo = '';
-  if(phoneToPhone === 'true'){
-    location = 'external'
+  if(phoneToPhone == 'true'){
+    location = 'external';
     numberFrom = from;
     aliasFrom = stringeeNumber;
     numberTo = to_number;
