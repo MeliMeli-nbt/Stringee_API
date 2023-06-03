@@ -25,6 +25,7 @@ router.get('/answer_url_project', (req, res) => {
     typeForm = userId;
     typeTo = decodeTo;
   }
+
   const connectAction = {
     action: 'connect',
     from: {
@@ -59,6 +60,7 @@ router.get('/answer_url_number', (req, res) => {
   let aliasFrom = '';
   let numberTo = '';
   let aliasTo = '';
+
   if(phoneToPhone == 'true'){
     location = 'external';
     numberFrom = from;
@@ -72,6 +74,7 @@ router.get('/answer_url_number', (req, res) => {
     numberTo = to_number;
     aliasTo = 'Call_to_' + to
   }
+  
   const scco = [{
     "action": "connect",
     "from": {
@@ -115,4 +118,27 @@ router.get('/generate_access_token', (req, res) => {
   res.json(clientAccessToken);
 })
 
+router.get('/generate_access_token_pcc', (req, res) => {
+  const apiKeySid = 'SK.0.GGW3Gi4XrOUQp3N78gBdCVpyFbb7FyH2';
+  const apiKeySecret = 'TnVGTG1vYWU3bjlKWnpMR0trbXg1T1g4clc0UkxvOWY=';
+  const header = { cty: 'stringee-api;v=1' };
+
+  const userId = req.query.userId;
+  const now = Date.now();
+  const exp = now + 100000000;
+
+  let payload = {};
+  if (userId) {
+    const jti = apiKeySid + '-' + now;
+    icc_api = true;
+    const iss = apiKeySid;
+    payload = { jti, iss, exp, icc_api, userId };
+  }
+  const clientAccessToken = jwt.sign(payload, apiKeySecret, {
+    algorithm: 'HS256',
+    header,
+  });
+
+  res.json(clientAccessToken);
+})
 module.exports = router;
