@@ -105,7 +105,7 @@ router.get('/generate_access_token', (req, res) => {
   const exp = now + 100000000;
 
   let payload = {};
-  if (userId !== null || userId !== undefined || userId !== '') {
+  if (userId !== null && userId !== undefined && userId !== '') {
     const jti = apiKeySid + '-' + now;
     const iss = apiKeySid;
     payload = { jti, iss, exp, userId };
@@ -131,7 +131,7 @@ router.get('/generate_access_token_pcc', (req, res) => {
   const exp = now + 100000000;
 
   let payload = {};
-  if (userId !== null || userId !== undefined || userId !== '') {
+  if (userId !== null && userId !== undefined && userId !== '') {
     const jti = apiKeySid + '-' + now;
     icc_api = true;
     const iss = apiKeySid;
