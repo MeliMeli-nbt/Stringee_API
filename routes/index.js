@@ -96,8 +96,8 @@ router.get('/answer_url_number', (req, res) => {
 })
 
 router.get('/generate_access_token', (req, res) => {
-  const apiKeySid = 'SK.0.GGW3Gi4XrOUQp3N78gBdCVpyFbb7FyH2';
-  const apiKeySecret = 'TnVGTG1vYWU3bjlKWnpMR0trbXg1T1g4clc0UkxvOWY=';
+  const apiKeySid = 'SK.0.IRN4bChwmGm9nLDIaq5lgMxucffqRkm';
+  const apiKeySecret = 'Qk14MHBmZE5jdEhNQnhMcDBEenFKbzh4bXNLV2VpSDg=';
   const header = { cty: 'stringee-api;v=1' };
 
   const userId = req.query.userId;
@@ -119,8 +119,8 @@ router.get('/generate_access_token', (req, res) => {
 })
 
 router.get('/generate_access_token_pcc', (req, res) => {
-  const apiKeySid = 'SK.0.GGW3Gi4XrOUQp3N78gBdCVpyFbb7FyH2';
-  const apiKeySecret = 'TnVGTG1vYWU3bjlKWnpMR0trbXg1T1g4clc0UkxvOWY=';
+  const apiKeySid = 'SK.0.IRN4bChwmGm9nLDIaq5lgMxucffqRkm';
+  const apiKeySecret = 'Qk14MHBmZE5jdEhNQnhMcDBEenFKbzh4bXNLV2VpSDg=';
   const header = { cty: 'stringee-api;v=1' };
 
   const userId = req.query.userId;
