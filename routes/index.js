@@ -105,17 +105,20 @@ router.get('/generate_access_token', (req, res) => {
   const exp = now + 100000000;
 
   let payload = {};
-  if (userId) {
+  if (userId !== null || userId !== undefined || userId !== '') {
     const jti = apiKeySid + '-' + now;
     const iss = apiKeySid;
     payload = { jti, iss, exp, userId };
-  }
-  const clientAccessToken = jwt.sign(payload, apiKeySecret, {
-    algorithm: 'HS256',
-    header,
-  });
 
-  res.json(clientAccessToken);
+    const clientAccessToken = jwt.sign(payload, apiKeySecret, {
+      algorithm: 'HS256',
+      header,
+    });
+
+    res.json(clientAccessToken);
+  } else {
+    res.json('NotFound UserId'); 
+  }
 })
 
 router.get('/generate_access_token_pcc', (req, res) => {
@@ -128,17 +131,20 @@ router.get('/generate_access_token_pcc', (req, res) => {
   const exp = now + 100000000;
 
   let payload = {};
-  if (userId) {
+  if (userId !== null || userId !== undefined || userId !== '') {
     const jti = apiKeySid + '-' + now;
     icc_api = true;
     const iss = apiKeySid;
     payload = { jti, iss, exp, icc_api, userId };
-  }
-  const clientAccessToken = jwt.sign(payload, apiKeySecret, {
+
+    const clientAccessToken = jwt.sign(payload, apiKeySecret, {
     algorithm: 'HS256',
     header,
-  });
+    });
 
-  res.json(clientAccessToken);
+    res.json(clientAccessToken);
+  } else {
+    res.json('NotFound UserId'); 
+  }
 })
 module.exports = router;
